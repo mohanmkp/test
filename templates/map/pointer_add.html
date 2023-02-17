@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+
+    <main class="col-md-9  col-lg-12 add-map-pointer">
+      <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
+        <h1 class="h2">Add pointer on your map</h1>
+        <div class="btn-toolbar mb-2 mb-md-0">
+        <a href="/pointer/" class="btn btn-primary" >view pointers</a>
+
+        </div>
+      </div>
+
+    </div>
+    </main>
+
+
+<main class="col-5 offset-4 mt-4 add-map-inner">
+
+{% if added  %}
+<div class="alert alert-success" role="alert">
+  <strong>Added successfully</strong>
+    <button type="button" class="btn-close float-end" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% endif %}
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+      <div class="mb-3">
+        <label for="title" class="form-label">Title</label>
+        <input type="text" class="form-control" id="title" name="title" value='{{ form.title.value|default_if_none:"" }}' aria-describedby="emailHelp" required>
+
+          {% if not_add %}
+          <span class="text-danger">{{form.title.errors.as_text}} </span>
+          {% endif %}
+      </div>
+      <div class="mb-3">
+        <label for="exampleInputPassword1" class="form-label">Longitude</label>
+        <input type="number" class="form-control" name="longitude" value='{{ form.longitude.value|default_if_none:"" }}'  step="0.000000000000000001" id="exampleInputPassword1" required>
+          {% if not_add %}
+          <span class="text-danger">{{form.longitude.errors.as_text}} </span>
+          {% endif %}
+      </div>
+
+
+        <div class="mb-3">
+        <label for="Latitude" class="form-label">Latitude</label>
+        <input type="number" class="form-control" name="latitude" value='{{ form.latitude.value|default_if_none:"" }}' step="0.000000000000000001" id="Latitude" required>
+          {% if not_add %}
+          <span class="text-danger">{{form.latitude.errors.as_text}}</span>
+          {% endif %}
+      </div>
+      
+      <!-- <label for="file" class="form-label">File</label>
+        <input type="file" class="form-control" name="filee"  required> -->
+        <div class="md-3">
+          <label for="">Select</label>
+          <select class="form-select" name="typee" aria-label="Default select example">
+            <option selected>Select</option>
+            <option value="avalanche">Avalanche</option>
+            <option value="rain">Rain</option>
+    
+          </select>
+        </div>
+        <!-- <div class="mb-3">
+
+          <label for="file" class="form-label">File </label>
+          <input type="file" class="form-control" name="filee" >
+  
+        </div> -->
+
+        <div class="mb-3">
+  
+        <label for="station_id" class="form-label">Station id</label>
+        <input type="text" class="form-control" name="station_id"  required>
+
+      </div>
+      <div class="mb-3">
+
+        <label for="terminal_id" class="form-label">Terminal id</label>
+        <input type="text" class="form-control" name="terminal_id" required>
+
+      </div>
+      
+
+
+      <button type="submit" class="btn btn-primary">Submitt</button>
+
+    </form>
+</main>
+{% endblock %}

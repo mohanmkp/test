@@ -1,0 +1,127 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+
+
+<div class="col-md-9 col-lg-12 px-md-4 add-pointer-btn">
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 ">
+      <h1 class="h2">Avalanche Code Update</h1>
+ </div>
+
+ {% if wss_fail %}
+ <div class="alert alert-warning alert-dismissible fade show" role="alert">
+  <strong>Websocket connection closed</strong> please connect and try again
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+
+{% endif %}
+ <div class="col-md-12 px-md-4 shadow-lg p-3 mb-5 bg-body-tertiary rounded">
+
+
+
+    <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" onclick="radion_one()" value="option1" checked>
+        <label class="form-check-label" for="inlineRadio1">Send mannuly</label>
+      </div>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" onclick="radion_two()" value="option2">
+        <label class="form-check-label" for="inlineRadio2">Send file</label>
+      </div>
+ 
+
+
+    <form  method="post" id="form1">
+        {% csrf_token %}
+  
+        <div class="row my-4">
+          <div class="col">
+              <label  class="form-label"> Message Start</label>
+              <input type="text" class="form-control" value="#@"  readonly>
+            
+          </div>
+          <div class="col">
+              <label  class="form-label">Message Code</label>
+            <input type="text"  class="form-control" value="95"  readonly>
+     
+          </div>
+      </div>
+
+          <div class="row my-4">
+           
+            <div class="col">
+                <label  class="form-label">Action Code</label>
+                <select class="form-select" aria-label="Default select example" name="num-of-forecast-day" id="num-of-forecast-day" required>
+                    <option value="" selected disabled> select action</option>
+                    <option value="01" class="text-capitalize">Add new axis</option>
+                    <option value="02" class="text-capitalize">Edit existing axis</option>
+                    <option value="03" class="text-capitalize">Delete existing axis</option>
+
+                  </select>
+            </div>
+
+              <div class="col">
+                <label  class="form-label">Avalanche Code</label>
+                <input type="text" maxlength="2" minlength="2" pattern="\d*" title="please enter 2 digits of number" class="form-control" placeholder="00" name="command_code" value="{{command_code}}"  required>
+             
+            </div>
+          </div>
+        
+  
+
+            <div class="row my-4">
+
+                <div class="col">
+                    <label  class="form-label"> Avalanche Code Details</label>
+                   <textarea name="query_message"  id="" cols="30" rows="1" maxlength="100" class="form-control">{{query_message}}</textarea>
+                </div>
+
+                <div class="col">
+                    <label  class="form-label"> Message End</label>
+                    <input type="text" class="form-control" value="@#"  readonly>
+                </div>
+          </div>
+    
+    
+            <div class="row my-4">
+                <div class="col-5">
+                    <button type="submit" class="btn btn-purple w-25">Send</button>
+                    <button type="reset" class="btn btn-info w-25 text-white ms-1">Reset</button>
+                </div>
+          </div>
+    </form>
+
+
+    <form method="post" id="form2" class="d-none p-5">
+        {% csrf_token %}
+           <div class="containerr">
+            <input type="file" class="form-control" accept=".xlsx, .xls, .csv" required >
+         
+        </div>
+
+          <div class="row my-4">
+            <div class="col-5">
+                <button type="submit" class="btn btn-purple w-25">Send</button>
+                <!-- <button type="reset" class="btn btn-info w-25 text-white ms-1">Reset</button> -->
+                <button type="reset" class="btn btn-info w-50 text-white ms-1">Download File Format</button>
+            </div>
+      </div>
+    </form>
+
+ </div>
+
+ <script>
+    function radion_one(){
+        document.getElementById("form2").classList.add('d-none')
+        document.getElementById("form1").classList.remove('d-none')
+    }
+
+
+    function radion_two(){
+        document.getElementById("form1").classList.add('d-none')
+        document.getElementById("form2").classList.remove('d-none')
+
+    }
+ </script>
+
+{% endblock %}
